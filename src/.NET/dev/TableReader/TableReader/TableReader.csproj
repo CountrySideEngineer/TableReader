@@ -7,6 +7,8 @@
     <RepositoryUrl>https://github.com/CountrySideEngineer/TableReader</RepositoryUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <BaseOutputPath>..\bin</BaseOutputPath>
+    <FileVersion>0.1.0.0</FileVersion>
+    <AssemblyVersion>0.1.0.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
