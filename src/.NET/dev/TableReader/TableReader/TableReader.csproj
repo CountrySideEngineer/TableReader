@@ -16,4 +16,10 @@
     <Product>TableReader</Product>
     <AssemblyTitle>TableReader library.</AssemblyTitle>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Logger">
+      <HintPath>..\packages\Logger.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>

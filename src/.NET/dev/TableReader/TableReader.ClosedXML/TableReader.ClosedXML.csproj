@@ -27,7 +27,7 @@
 
   <ItemGroup>
     <Reference Include="Logger">
-      <HintPath>..\..\..\..\..\..\AutoTestPrep\dev\.NET\src\libs\Logger.dll</HintPath>
+      <HintPath>..\packages\Logger.dll</HintPath>
     </Reference>
   </ItemGroup>
 
