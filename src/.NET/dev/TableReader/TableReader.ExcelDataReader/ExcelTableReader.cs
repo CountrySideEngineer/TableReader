@@ -1,5 +1,9 @@
-﻿using System.Data;
+﻿using ExcelDataReader;
+using Logger;
+using System.ComponentModel;
+using System.Data;
 using System.Text;
+using System.Xml.Linq;
 using TableReader.Interface;
 using Range = TableReader.TableData.Range;
 
@@ -10,17 +14,17 @@ namespace TableReader.ExcelDataReader
 		/// <summary>
 		/// Excel stream object to stream.
 		/// </summary>
-		protected Stream? _excelStream = null;
+		protected Stream _excelStream = null;
 
 		/// <summary>
 		/// Data in sheet as DataTable object.
 		/// </summary>
-		protected DataTable? _sheetData = null;
+		protected DataTable _sheetData = null;
 
 		/// <summary>
 		/// Sheet name to read from.
 		/// </summary>
-		public string SheetName { get; set; }
+		public string SheetName { get; set; } = string.Empty;
 
 		/// <summary>
 		/// Default constructor.
@@ -52,6 +56,9 @@ namespace TableReader.ExcelDataReader
 		/// <returns></returns>
 		public DataTable Read(string name)
 		{
+			Log.TRACE();
+			Log.DEBUG($"{nameof(name),20} = {name}");
+
 			var offset = new Range()
 			{
 				RowCount = 1,
@@ -69,6 +76,13 @@ namespace TableReader.ExcelDataReader
 		/// <returns>Data in table as DataTable object.</returns>
 		public DataTable Read(string name, Range offset)
 		{
+			Log.TRACE();
+			Log.DEBUG($"{nameof(name),20} = {name}");
+			Log.DEBUG($"{nameof(offset.StartRow),20} = {offset.StartRow}");
+			Log.DEBUG($"{nameof(offset.StartColumn),20} = {offset.StartColumn}");
+			Log.DEBUG($"{nameof(offset.RowCount),20} = {offset.RowCount}");
+			Log.DEBUG($"{nameof(offset.ColumnCount),20} = {offset.ColumnCount}");
+
 			LoadWorksheet();
 
 			try
@@ -91,6 +105,13 @@ namespace TableReader.ExcelDataReader
 		/// <returns>Table range, table top row and column, and row and column size.</returns>
 		protected Range GetTableRange(string name, Range offset)
 		{
+			Log.TRACE();
+			Log.DEBUG($"{nameof(name),20} = {name}");
+			Log.DEBUG($"{nameof(offset.StartRow),20} = {offset.StartRow}");
+			Log.DEBUG($"{nameof(offset.StartColumn),20} = {offset.StartColumn}");
+			Log.DEBUG($"{nameof(offset.RowCount),20} = {offset.RowCount}");
+			Log.DEBUG($"{nameof(offset.ColumnCount),20} = {offset.ColumnCount}");
+
 			Range tableTitleRange = FindFirstItem(name);
 			Range tableTop = new Range(tableTitleRange);
 			tableTop.StartRow += offset.RowCount;
@@ -115,8 +136,14 @@ namespace TableReader.ExcelDataReader
 		/// <returns>The number of row.</returns>
 		protected int GetTableRowCount(Range tableTop)
 		{
+			Log.TRACE();
+			Log.DEBUG($"{nameof(tableTop.StartRow),20} = {tableTop.StartRow}");
+			Log.DEBUG($"{nameof(tableTop.StartColumn),20} = {tableTop.StartColumn}");
+			Log.DEBUG($"{nameof(tableTop.RowCount),20} = {tableTop.RowCount}");
+			Log.DEBUG($"{nameof(tableTop.ColumnCount),20} = {tableTop.ColumnCount}");
+
 			int rowCount = 0;
-			object item = null;
+			object? item = null;
 			do
 			{
 				try
@@ -126,6 +153,8 @@ namespace TableReader.ExcelDataReader
 				catch (Exception ex)
 				when (ex is IndexOutOfRangeException)
 				{
+					Log.INFO("The last row is detected.");
+
 					//Reach the last row in the sheet.
 					break;
 				}
@@ -147,8 +176,14 @@ namespace TableReader.ExcelDataReader
 		/// <returns>The number of column.</returns>
 		protected int GetTableColumnCount(Range tableTop)
 		{
+			Log.TRACE();
+			Log.DEBUG($"{nameof(tableTop.StartRow),20} = {tableTop.StartRow}");
+			Log.DEBUG($"{nameof(tableTop.StartColumn),20} = {tableTop.StartColumn}");
+			Log.DEBUG($"{nameof(tableTop.RowCount),20} = {tableTop.RowCount}");
+			Log.DEBUG($"{nameof(tableTop.ColumnCount),20} = {tableTop.ColumnCount}");
+
 			int colCount = 0;
-			object item = null;
+			object? item = null;
 			do
 			{
 				try
@@ -158,6 +193,7 @@ namespace TableReader.ExcelDataReader
 				catch (Exception ex)
 				when (ex is IndexOutOfRangeException)
 				{
+					Log.INFO("Last column is detected.");
 					//Reach the last column in the sheet.
 					break;
 				}
@@ -181,8 +217,13 @@ namespace TableReader.ExcelDataReader
 		/// <exception cref="InvalidDataException"></exception>
 		protected Range FindFirstItem(string item)
 		{
+			Log.TRACE();
+			Log.DEBUG($"{nameof(item),20} = {item}");
+
 			if ((string.IsNullOrEmpty(item)) || (string.IsNullOrWhiteSpace(item)))
 			{
+				Log.WARN("Item must not empty or only white space.");
+
 				throw new ArgumentException("The string to be searched must have value.");
 			}
 			for (int rowIndex = 0; rowIndex < _sheetData.Rows.Count; rowIndex++)
@@ -210,12 +251,18 @@ namespace TableReader.ExcelDataReader
 		/// </summary>
 		protected void LoadWorksheet()
 		{
+			Log.TRACE();
+
 			if (null == _excelStream)
 			{
+				Log.WARN("Excel stream has not been loaded.");
+
 				throw new NullReferenceException("Stream data to read has not been set.");
 			}
 			if ((string.IsNullOrEmpty(SheetName)) || (string.IsNullOrWhiteSpace(SheetName)))
 			{
+				Log.WARN("Sheet name to read has not been set.");
+
 				throw new InvalidDataException("Sheet Name to scan is invalid.");
 			}
 
@@ -233,6 +280,8 @@ namespace TableReader.ExcelDataReader
 		/// </summary>
 		protected void UnloadWorksheet()
 		{
+			Log.TRACE();
+
 			if (null != _sheetData)
 			{
 				_sheetData = null;
@@ -248,6 +297,12 @@ namespace TableReader.ExcelDataReader
 		/// <returns>Read data from the sheet.</returns>
 		protected virtual DataTable ReadTable(string name, Range range)
 		{
+			Log.TRACE();
+			Log.DEBUG($"{nameof(range.StartRow),20} = {range.StartRow}");
+			Log.DEBUG($"{nameof(range.StartColumn),20} = {range.StartColumn}");
+			Log.DEBUG($"{nameof(range.RowCount),20} = {range.RowCount}");
+			Log.DEBUG($"{nameof(range.ColumnCount),20} = {range.ColumnCount}");
+
 			var table = new DataTable(name);
 			SetScheme(ref table, range);
 			LoadContent(ref table, range);
@@ -262,6 +317,12 @@ namespace TableReader.ExcelDataReader
 		/// <param name="range">Table range in the sheet.</param>
 		protected virtual void SetScheme(ref DataTable dst, Range range)
 		{
+			Log.TRACE();
+			Log.DEBUG($"{nameof(range.StartRow),20} = {range.StartRow}");
+			Log.DEBUG($"{nameof(range.StartColumn),20} = {range.StartColumn}");
+			Log.DEBUG($"{nameof(range.RowCount),20} = {range.RowCount}");
+			Log.DEBUG($"{nameof(range.ColumnCount),20} = {range.ColumnCount}");
+
 			for (int colIndex = 0; colIndex < range.ColumnCount; colIndex++)
 			{
 				object contentObj = _sheetData.Rows[range.StartRow][range.StartColumn + colIndex];
@@ -278,6 +339,12 @@ namespace TableReader.ExcelDataReader
 		/// <param name="range">Table range in the sheet.</param>
 		protected virtual void LoadContent(ref DataTable dst, Range range)
 		{
+			Log.TRACE();
+			Log.DEBUG($"{nameof(range.StartRow),20} = {range.StartRow}");
+			Log.DEBUG($"{nameof(range.StartColumn),20} = {range.StartColumn}");
+			Log.DEBUG($"{nameof(range.RowCount),20} = {range.RowCount}");
+			Log.DEBUG($"{nameof(range.ColumnCount),20} = {range.ColumnCount}");
+
 			var rowRange = new Range(range);
 			rowRange.StartRow++;    //Skip table header.
 			rowRange.RowCount--;
@@ -295,24 +362,26 @@ namespace TableReader.ExcelDataReader
 		/// <param name="range">One row range to read in the sheet.</param>
 		protected virtual void ReadRow(ref DataTable dst, Range range)
 		{
+			Log.TRACE();
+			Log.DEBUG($"{nameof(range.StartRow),20} = {range.StartRow}");
+			Log.DEBUG($"{nameof(range.StartColumn),20} = {range.StartColumn}");
+			Log.DEBUG($"{nameof(range.RowCount),20} = {range.RowCount}");
+			Log.DEBUG($"{nameof(range.ColumnCount),20} = {range.ColumnCount}");
+
 			DataRow row = dst.NewRow();
 			for (int colIndex = 0; colIndex < range.ColumnCount; colIndex++)
 			{
-				string content = string.Empty;
 				try
 				{
 					object contentObj = _sheetData.Rows[range.StartRow][range.StartColumn + colIndex];
-					content = contentObj.ToString();
+					string content = contentObj.ToString();
+					row[colIndex] = content;
 				}
 				catch (Exception ex)
 				when ((ex is InvalidCastException) ||
 					(ex is IndexOutOfRangeException))
 				{
-					content = string.Empty;
-				}
-				finally
-				{
-					row[colIndex] = content;
+					row[colIndex] = string.Empty;
 				}
 			}
 			dst.Rows.Add(row);
