@@ -21,7 +21,7 @@ namespace TableReader.SpecCheck.ClosedXML
 				string sheetName = args[0];
 				string tableName = args[1];
 
-				string testFilePath = @".\..\..\..\TestData\TableReader_SpecCheck.xlsx";
+				string testFilePath = @".\..\..\..\..\TestData\TableReader_SpecCheck.xlsx";
 				long totalTime = 0;
 				long testCount = 1;
 				DataTable table = null;
