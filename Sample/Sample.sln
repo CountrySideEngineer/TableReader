@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34616.47
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.ClosedXml", "Sample.ClosedXml\Sample.ClosedXml.csproj", "{E3AE3697-C6A3-4F0B-8137-5A8AEB484643}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.ExcelDataReader", "Sample.ExcelDataReader\Sample.ExcelDataReader.csproj", "{B28A2C69-3E9E-4757-9396-0370A97A4E5C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E3AE3697-C6A3-4F0B-8137-5A8AEB484643}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3AE3697-C6A3-4F0B-8137-5A8AEB484643}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3AE3697-C6A3-4F0B-8137-5A8AEB484643}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3AE3697-C6A3-4F0B-8137-5A8AEB484643}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B28A2C69-3E9E-4757-9396-0370A97A4E5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B28A2C69-3E9E-4757-9396-0370A97A4E5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B28A2C69-3E9E-4757-9396-0370A97A4E5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B28A2C69-3E9E-4757-9396-0370A97A4E5C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4E2119C8-0CE2-40FC-938E-A5AC0F10CA20}
+	EndGlobalSection
+EndGlobal
