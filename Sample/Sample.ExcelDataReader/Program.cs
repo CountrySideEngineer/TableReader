@@ -1,0 +1,22 @@
+﻿using System.Data;
+using TableReader.ExcelDataReader;
+using TableReader.Interface;
+
+System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+
+string testFilePath = @".\..\..\..\..\sample_data.xlsx";    // Path to file in the directory the solution file is.
+string sheetName = "SampleSheet";
+string tableName = "SampleTable_002";
+
+using var stream = new FileStream(testFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+ITableReader reader = new ExcelTableReader(stream, sheetName);
+DataTable table = reader.Read(tableName);
+
+for (int rowIndex = 0; rowIndex < table.Rows.Count; rowIndex++)
+{
+	for (int colIndex = 0; colIndex < table.Columns.Count; colIndex++)
+	{
+		Console.Write($"({rowIndex + 1,4},{colIndex + 1,4}) : {table.Rows[rowIndex][colIndex],-24}");
+	}
+	Console.WriteLine();
+}
