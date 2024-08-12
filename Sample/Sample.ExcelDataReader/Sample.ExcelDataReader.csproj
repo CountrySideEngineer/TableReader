@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ExcelDataReader" Version="3.7.0" />
+    <PackageReference Include="ExcelDataReader.DataSet" Version="3.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Logger">
+      <HintPath>..\..\src\.NET\dev\TableReader\bin\TableReader.ExcelDataReader\Release\net8.0\Logger.dll</HintPath>
+    </Reference>
+    <Reference Include="TableReader">
+      <HintPath>..\..\src\.NET\dev\TableReader\bin\TableReader.ExcelDataReader\Release\net8.0\TableReader.dll</HintPath>
+    </Reference>
+    <Reference Include="TableReader.ExcelDataReader">
+      <HintPath>..\..\src\.NET\dev\TableReader\bin\TableReader.ExcelDataReader\Release\net8.0\TableReader.ExcelDataReader.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
