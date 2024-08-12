@@ -2,12 +2,13 @@
 Class library to read table.
 
 ![Release(.NET Framework)](https://img.shields.io/badge/release(dotnet_framwork)-0.1.1.0-blue)
-![Release(.NET)](https://img.shields.io/badge/release(dotnet)-0.1.0.0-darkblue)
+![Release(.NET)](https://img.shields.io/badge/release(dotnet)-0.1.0.0-darkblue)  
 ![.NET Framework](https://img.shields.io/badge/.NET%20Framework-%3E%3D%204.7.2-red)
-![.NET](https://img.shields.io/badge/.NET-8.0-red)
-![ClosedXml(.net framework)](https://img.shields.io/badge/ClosedXml(.net_framework)-0.97.0-lawngreen%)
-![ClosedXml(.NET)](https://img.shields.io/badge/ClosedXml(.NET)-0.103.0-LightSeaGreen)
-![ExceTableReader(.net framework)]
+![.NET](https://img.shields.io/badge/.NET-8.0-red)  
+![ClosedXml(.net framework)](https://img.shields.io/badge/ClosedXml(.net_framework)-0.97.0-lawngreen)
+![ClosedXml(.NET)](https://img.shields.io/badge/ClosedXml(.NET)-0.103.0-LightSeaGreen)  
+![ExceTableReader(.NET)](https://img.shields.io/badge/ExcelTableReader(.NET)-3.7.0-SpringGreen)
+![ExceTableReader(.net framework)](https://img.shields.io/badge/ExcelTableReader(.net%20framework)-3.7.0-YellowGreen)
 
 # ExcelTableReader
 
