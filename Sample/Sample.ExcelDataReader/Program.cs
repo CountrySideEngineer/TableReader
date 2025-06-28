@@ -6,11 +6,19 @@ System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Inst
 
 string testFilePath = @".\..\..\..\..\sample_data.xlsx";    // Path to file in the directory the solution file is.
 string sheetName = "SampleSheet";
-string tableName = "SampleTable_002";
+string tableName = "SampleTable_009";
 
 using var stream = new FileStream(testFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
 ITableReader reader = new ExcelTableReader(stream, sheetName);
 DataTable table = reader.Read(tableName);
+
+Console.WriteLine(table.TableName);
+foreach (DataColumn column in table.Columns)
+{
+    Console.Write("              ");
+    Console.Write($"{column.ColumnName,-24}");
+}
+Console.WriteLine();
 
 for (int rowIndex = 0; rowIndex < table.Rows.Count; rowIndex++)
 {
