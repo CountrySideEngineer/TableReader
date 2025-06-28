@@ -50,10 +50,12 @@ namespace TableReader.ClosedXML
 		/// <returns>Table content as collection of row</returns>
 		public virtual DataTable Read(string name)
 		{
-			Log.TRACE();
+#if DEBUG
+            Log.TRACE();
 			Log.DEBUG($"{nameof(name),12} = {name}");
+#endif
 
-			var offset = new Range()
+            var offset = new Range()
 			{
 				RowCount = 1,
 				ColumnCount = 1
@@ -70,14 +72,16 @@ namespace TableReader.ClosedXML
 		/// <returns>Table content as collection of row.</returns>
 		public DataTable Read(string name, Range range)
 		{
-			Log.TRACE();
+#if DEBUG
+            Log.TRACE();
 			Log.DEBUG($"{nameof(name),12} = {name}");
 			Log.DEBUG($"{nameof(range.StartRow),12} = {range.StartRow}");
 			Log.DEBUG($"{nameof(range.StartColumn),12} = {range.StartColumn}");
 			Log.DEBUG($"{nameof(range.RowCount),12} = {range.RowCount}");
 			Log.DEBUG($"{nameof(range.ColumnCount),12} = {range.ColumnCount}");
+#endif
 
-			LoadWorkSheet();
+            LoadWorkSheet();
 
 			try
 			{
@@ -100,13 +104,15 @@ namespace TableReader.ClosedXML
 		/// <exception cref="ArgumentOutOfRangeException">Values in range is invalid.</exception>
 		protected IEnumerable<Range> RangeToRowCollection(Range range)
 		{
-			Log.TRACE();
+#if DEBUG
+            Log.TRACE();
 			Log.DEBUG($"{nameof(range.StartRow),12} = {range.StartRow}");
 			Log.DEBUG($"{nameof(range.StartColumn),12} = {range.StartColumn}");
 			Log.DEBUG($"{nameof(range.RowCount),12} = {range.RowCount}");
 			Log.DEBUG($"{nameof(range.ColumnCount),12} = {range.ColumnCount}");
+#endif
 
-			try
+            try
 			{
 				if ((range.StartRow < 1) || (range.RowCount < 0))
 				{
@@ -141,9 +147,11 @@ namespace TableReader.ClosedXML
 		/// <exception cref="ArgumentOutOfRangeException">Values in range is invalid.</exception>
 		protected IEnumerable<Range> RangeToColCollection(Range range)
 		{
-			Log.TRACE();
+#if DEBUG
+            Log.TRACE();
+#endif
 
-			try
+            try
 			{
 				if ((range.StartColumn < 1) || (range.ColumnCount < 0))
 				{
@@ -174,10 +182,12 @@ namespace TableReader.ClosedXML
 		/// <exception cref="InvalidDataException"></exception>
 		protected void LoadWorkSheet()
 		{
-			Log.TRACE();
+#if DEBUG
+            Log.TRACE();
 			Log.DEBUG($"{SheetName,12} = {SheetName}");
+#endif
 
-			if (null == _excelStream)
+            if (null == _excelStream)
 			{
 				Log.ERROR("Stream data to read from has not been set.");
 
@@ -210,9 +220,11 @@ namespace TableReader.ClosedXML
 		/// </summary>
 		protected void UnloadWorksheet()
 		{
-			Log.TRACE();
+#if DEBUG
+            Log.TRACE();
+#endif
 
-			if (null != _workSheet)
+            if (null != _workSheet)
 			{
 				_workSheet = null;
 				GC.Collect();
@@ -229,10 +241,12 @@ namespace TableReader.ClosedXML
 		/// <exception cref="InvalidDataException">Sheet name to scan is invalid.</exception>
 		public Range FindFirstItem(string item)
 		{
-			Log.TRACE();
+#if DEBUG
+            Log.TRACE();
 			Log.DEBUG($"{nameof(item),12} = {item}");
+#endif
 
-			if (string.IsNullOrEmpty(item))
+            if (string.IsNullOrEmpty(item))
 			{
 				Log.WARN("The string to search must have value.");
 
@@ -289,14 +303,16 @@ namespace TableReader.ClosedXML
 		/// <exception cref="NullReferenceException"></exception>
 		protected Range GetTableRange(string name, Range range)
 		{
-			Log.TRACE();
+#if DEBUG
+            Log.TRACE();
 			Log.DEBUG($"{nameof(name),12} = {name}");
 			Log.DEBUG($"{nameof(range.StartRow),12} = {range.StartRow}");
 			Log.DEBUG($"{nameof(range.StartColumn),12} = {range.StartColumn}");
 			Log.DEBUG($"{nameof(range.RowCount),12} = {range.RowCount}");
 			Log.DEBUG($"{nameof(range.ColumnCount),12} = {range.ColumnCount}");
+#endif
 
-			Range nameCellRange = FindFirstItem(name);
+            Range nameCellRange = FindFirstItem(name);
 			Range tableTop = new Range(nameCellRange);
 			tableTop.StartRow += range.RowCount;
 			tableTop.StartColumn += range.ColumnCount;
@@ -320,11 +336,13 @@ namespace TableReader.ClosedXML
 		/// <returns>The number of row.</returns>
 		protected int GetTableRowCount(Range tableTop)
 		{
-			Log.TRACE();
+#if DEBUG
+            Log.TRACE();
 			Log.DEBUG($"{nameof(tableTop.StartRow),12} = {tableTop.StartRow}");
 			Log.DEBUG($"{nameof(tableTop.StartColumn),12} = {tableTop.StartColumn}");
+#endif
 
-			string content = string.Empty;
+            string content = string.Empty;
 			int rowCount = 0;
 			do
 			{
@@ -346,11 +364,13 @@ namespace TableReader.ClosedXML
 		/// <returns>The number of column.</returns>
 		protected int GetTableColumnCount(Range tableTop)
 		{
-			Log.TRACE();
+#if DEBUG
+            Log.TRACE();
 			Log.DEBUG($"{nameof(tableTop.StartRow),12} = {tableTop.StartRow}");
 			Log.DEBUG($"{nameof(tableTop.StartColumn),12} = {tableTop.StartColumn}");
+#endif
 
-			string content = string.Empty;
+            string content = string.Empty;
 			int colCount = 0;
 			do
 			{
@@ -373,14 +393,16 @@ namespace TableReader.ClosedXML
 		/// <returns>Read data from the sheet.</returns>
 		protected virtual DataTable ReadTable(string name, Range range)
 		{
-			Log.TRACE();
+#if DEBUG
+            Log.TRACE();
 			Log.DEBUG($"{nameof(name),12} = {name}");
 			Log.DEBUG($"{nameof(range.StartRow),12} = {range.StartRow}");
 			Log.DEBUG($"{nameof(range.StartColumn),12} = {range.StartColumn}");
 			Log.DEBUG($"{nameof(range.RowCount),12} = {range.RowCount}");
 			Log.DEBUG($"{nameof(range.ColumnCount),12} = {range.ColumnCount}");
+#endif
 
-			var table = new DataTable(name);
+            var table = new DataTable(name);
 			SetScheme(ref table, range);
 			LoadContent(ref table, range);
 
@@ -394,13 +416,15 @@ namespace TableReader.ClosedXML
 		/// <param name="range">Table range in the sheet.</param>
 		protected virtual void SetScheme(ref DataTable dst, Range range)
 		{
-			Log.TRACE();
+#if DEBUG
+            Log.TRACE();
 			Log.DEBUG($"{nameof(range.StartRow),12} = {range.StartRow}");
 			Log.DEBUG($"{nameof(range.StartColumn),12} = {range.StartColumn}");
 			Log.DEBUG($"{nameof(range.RowCount),12} = {range.RowCount}");
 			Log.DEBUG($"{nameof(range.ColumnCount),12} = {range.ColumnCount}");
+#endif
 
-			for (int colIndex = 0; colIndex < range.ColumnCount; colIndex++)
+            for (int colIndex = 0; colIndex < range.ColumnCount; colIndex++)
 			{
 				string content = _workSheet
 					.Cell(range.StartRow, range.StartColumn + colIndex)
@@ -418,13 +442,15 @@ namespace TableReader.ClosedXML
 		/// <param name="range">Table range in the sheet.</param>
 		protected virtual void LoadContent(ref DataTable dst, Range range)
 		{
-			Log.TRACE();
+#if DEBUG
+            Log.TRACE();
 			Log.DEBUG($"{nameof(range.StartRow),12} = {range.StartRow}");
 			Log.DEBUG($"{nameof(range.StartColumn),12} = {range.StartColumn}");
 			Log.DEBUG($"{nameof(range.RowCount),12} = {range.RowCount}");
 			Log.DEBUG($"{nameof(range.ColumnCount),12} = {range.ColumnCount}");
+#endif
 
-			var rowRange = new Range(range);
+            var rowRange = new Range(range);
 			rowRange.StartRow++;    //Skip table header.
 			rowRange.RowCount--;
 			for (int rowIndex = 0; rowIndex < rowRange.RowCount; rowIndex++)
@@ -441,13 +467,15 @@ namespace TableReader.ClosedXML
 		/// <param name="range">One row range to read in the sheet.</param>
 		protected virtual void ReadRow(ref DataTable dst, Range rowRange)
 		{
-			Log.TRACE();
+#if DEBUG
+            Log.TRACE();
 			Log.DEBUG($"{nameof(rowRange.StartRow),12} = {rowRange.StartRow}");
 			Log.DEBUG($"{nameof(rowRange.StartColumn),12} = {rowRange.StartColumn}");
 			Log.DEBUG($"{nameof(rowRange.RowCount),12} = {rowRange.RowCount}");
 			Log.DEBUG($"{nameof(rowRange.ColumnCount),12} = {rowRange.ColumnCount}");
+#endif
 
-			DataRow row = dst.NewRow();
+            DataRow row = dst.NewRow();
 			for (int colIndex = 0; colIndex < rowRange.ColumnCount; colIndex++)
 			{
 				string content = _workSheet
