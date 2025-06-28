@@ -25,10 +25,4 @@
     <ProjectReference Include="..\TableReader\TableReader.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="Logger">
-      <HintPath>..\packages\Logger.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>
