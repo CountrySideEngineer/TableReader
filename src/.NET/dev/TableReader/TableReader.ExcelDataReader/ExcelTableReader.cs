@@ -158,11 +158,8 @@ namespace TableReader.ExcelDataReader
 				{
 					item = _sheetData.Rows[tableTop.StartRow + rowCount][tableTop.StartColumn];
 				}
-				catch (Exception ex)
-				when (ex is IndexOutOfRangeException)
+				catch (IndexOutOfRangeException)
 				{
-					Log.INFO("The last row is detected.");
-
 					//Reach the last row in the sheet.
 					break;
 				}
@@ -200,10 +197,8 @@ namespace TableReader.ExcelDataReader
 				{
 					item = _sheetData.Rows[tableTop.StartRow][tableTop.StartColumn + colCount];
 				}
-				catch (Exception ex)
-				when (ex is IndexOutOfRangeException)
+				catch (IndexOutOfRangeException)
 				{
-					Log.INFO("Last column is detected.");
 					//Reach the last column in the sheet.
 					break;
 				}
@@ -234,8 +229,6 @@ namespace TableReader.ExcelDataReader
 
             if ((string.IsNullOrEmpty(item)) || (string.IsNullOrWhiteSpace(item)))
 			{
-				Log.WARN("Item must not empty or only white space.");
-
 				throw new ArgumentException("The string to be searched must have value.");
 			}
 			for (int rowIndex = 0; rowIndex < _sheetData.Rows.Count; rowIndex++)
@@ -255,7 +248,7 @@ namespace TableReader.ExcelDataReader
 					}
 				}
 			}
-			throw new ArgumentException("No item has been foudn in found.");
+            throw new ArgumentException($"No cell containing \"{item}\" was found in sheet \"{SheetName}\".");
 		}
 
 		/// <summary>
@@ -269,18 +262,14 @@ namespace TableReader.ExcelDataReader
 
             if (null == _excelStream)
 			{
-				Log.WARN("Excel stream has not been loaded.");
-
-				throw new NullReferenceException("Stream data to read has not been set.");
-			}
-			if ((string.IsNullOrEmpty(SheetName)) || (string.IsNullOrWhiteSpace(SheetName)))
+                throw new NullReferenceException("The stream for reading the Excel file has not been set.");
+            }
+            if ((string.IsNullOrEmpty(SheetName)) || (string.IsNullOrWhiteSpace(SheetName)))
 			{
-				Log.WARN("Sheet name to read has not been set.");
+                throw new InvalidDataException("The stream used to read the Excel file has not been set.");
+            }
 
-				throw new InvalidDataException("Sheet Name to scan is invalid.");
-			}
-
-			var readerConf = new ExcelReaderConfiguration()
+            var readerConf = new ExcelReaderConfiguration()
 			{
 				FallbackEncoding = Encoding.GetEncoding("Shift_JIS")
 			};
