@@ -1,5 +1,4 @@
 ﻿using ExcelDataReader;
-using Logger;
 using System.ComponentModel;
 using System.Data;
 using System.Text;
@@ -56,11 +55,6 @@ namespace TableReader.ExcelDataReader
 		/// <returns></returns>
 		public DataTable Read(string name)
 		{
-#if DEBUG
-            Log.TRACE();
-			Log.DEBUG($"{nameof(name),20} = {name}");
-#endif
-
 			var offset = new Range()
 			{
 				RowCount = 1,
@@ -78,15 +72,6 @@ namespace TableReader.ExcelDataReader
 		/// <returns>Data in table as DataTable object.</returns>
 		public DataTable Read(string name, Range offset)
 		{
-#if DEBUG
-            Log.TRACE();
-			Log.DEBUG($"{nameof(name),20} = {name}");
-			Log.DEBUG($"{nameof(offset.StartRow),20} = {offset.StartRow}");
-			Log.DEBUG($"{nameof(offset.StartColumn),20} = {offset.StartColumn}");
-			Log.DEBUG($"{nameof(offset.RowCount),20} = {offset.RowCount}");
-			Log.DEBUG($"{nameof(offset.ColumnCount),20} = {offset.ColumnCount}");
-#endif
-
 			LoadWorksheet();
 
 			try
@@ -109,15 +94,6 @@ namespace TableReader.ExcelDataReader
 		/// <returns>Table range, table top row and column, and row and column size.</returns>
 		protected Range GetTableRange(string name, Range offset)
 		{
-#if DEBUG
-            Log.TRACE();
-			Log.DEBUG($"{nameof(name),20} = {name}");
-			Log.DEBUG($"{nameof(offset.StartRow),20} = {offset.StartRow}");
-			Log.DEBUG($"{nameof(offset.StartColumn),20} = {offset.StartColumn}");
-			Log.DEBUG($"{nameof(offset.RowCount),20} = {offset.RowCount}");
-			Log.DEBUG($"{nameof(offset.ColumnCount),20} = {offset.ColumnCount}");
-#endif
-
 			Range tableTitleRange = FindFirstItem(name);
 			Range tableTop = new Range(tableTitleRange);
 			tableTop.StartRow += offset.RowCount;
@@ -142,14 +118,6 @@ namespace TableReader.ExcelDataReader
 		/// <returns>The number of row.</returns>
 		protected int GetTableRowCount(Range tableTop)
 		{
-#if DEBUG
-            Log.TRACE();
-			Log.DEBUG($"{nameof(tableTop.StartRow),20} = {tableTop.StartRow}");
-			Log.DEBUG($"{nameof(tableTop.StartColumn),20} = {tableTop.StartColumn}");
-			Log.DEBUG($"{nameof(tableTop.RowCount),20} = {tableTop.RowCount}");
-			Log.DEBUG($"{nameof(tableTop.ColumnCount),20} = {tableTop.ColumnCount}");
-#endif
-
 			int rowCount = 0;
 			object? item = null;
 			do
@@ -181,14 +149,6 @@ namespace TableReader.ExcelDataReader
 		/// <returns>The number of column.</returns>
 		protected int GetTableColumnCount(Range tableTop)
 		{
-#if DEBUG
-            Log.TRACE();
-			Log.DEBUG($"{nameof(tableTop.StartRow),20} = {tableTop.StartRow}");
-			Log.DEBUG($"{nameof(tableTop.StartColumn),20} = {tableTop.StartColumn}");
-			Log.DEBUG($"{nameof(tableTop.RowCount),20} = {tableTop.RowCount}");
-			Log.DEBUG($"{nameof(tableTop.ColumnCount),20} = {tableTop.ColumnCount}");
-#endif
-
             int colCount = 0;
 			object? item = null;
 			do
@@ -222,11 +182,6 @@ namespace TableReader.ExcelDataReader
 		/// <exception cref="InvalidDataException"></exception>
 		protected Range FindFirstItem(string item)
 		{
-#if DEBUG
-            Log.TRACE();
-			Log.DEBUG($"{nameof(item),20} = {item}");
-#endif
-
             if ((string.IsNullOrEmpty(item)) || (string.IsNullOrWhiteSpace(item)))
 			{
 				throw new ArgumentException("The string to be searched must have value.");
@@ -256,10 +211,6 @@ namespace TableReader.ExcelDataReader
 		/// </summary>
 		protected void LoadWorksheet()
 		{
-#if DEBUG
-            Log.TRACE();
-#endif
-
             if (null == _excelStream)
 			{
                 throw new NullReferenceException("The stream for reading the Excel file has not been set.");
@@ -283,10 +234,6 @@ namespace TableReader.ExcelDataReader
 		/// </summary>
 		protected void UnloadWorksheet()
 		{
-#if DEBUG
-            Log.TRACE();
-#endif
-
             if (null != _sheetData)
 			{
 				_sheetData = null;
@@ -302,14 +249,6 @@ namespace TableReader.ExcelDataReader
 		/// <returns>Read data from the sheet.</returns>
 		protected virtual DataTable ReadTable(string name, Range range)
 		{
-#if DEBUG
-            Log.TRACE();
-			Log.DEBUG($"{nameof(range.StartRow),20} = {range.StartRow}");
-			Log.DEBUG($"{nameof(range.StartColumn),20} = {range.StartColumn}");
-			Log.DEBUG($"{nameof(range.RowCount),20} = {range.RowCount}");
-			Log.DEBUG($"{nameof(range.ColumnCount),20} = {range.ColumnCount}");
-#endif
-
             var table = new DataTable(name);
 			SetScheme(ref table, range);
 			LoadContent(ref table, range);
@@ -324,14 +263,6 @@ namespace TableReader.ExcelDataReader
 		/// <param name="range">Table range in the sheet.</param>
 		protected virtual void SetScheme(ref DataTable dst, Range range)
 		{
-#if DEBUG
-            Log.TRACE();
-			Log.DEBUG($"{nameof(range.StartRow),20} = {range.StartRow}");
-			Log.DEBUG($"{nameof(range.StartColumn),20} = {range.StartColumn}");
-			Log.DEBUG($"{nameof(range.RowCount),20} = {range.RowCount}");
-			Log.DEBUG($"{nameof(range.ColumnCount),20} = {range.ColumnCount}");
-#endif
-
             for (int colIndex = 0; colIndex < range.ColumnCount; colIndex++)
 			{
 				object contentObj = _sheetData.Rows[range.StartRow][range.StartColumn + colIndex];
@@ -348,14 +279,6 @@ namespace TableReader.ExcelDataReader
 		/// <param name="range">Table range in the sheet.</param>
 		protected virtual void LoadContent(ref DataTable dst, Range range)
 		{
-#if DEBUG
-            Log.TRACE();
-			Log.DEBUG($"{nameof(range.StartRow),20} = {range.StartRow}");
-			Log.DEBUG($"{nameof(range.StartColumn),20} = {range.StartColumn}");
-			Log.DEBUG($"{nameof(range.RowCount),20} = {range.RowCount}");
-			Log.DEBUG($"{nameof(range.ColumnCount),20} = {range.ColumnCount}");
-#endif
-
             var rowRange = new Range(range);
 			rowRange.StartRow++;    //Skip table header.
 			rowRange.RowCount--;
@@ -373,14 +296,6 @@ namespace TableReader.ExcelDataReader
 		/// <param name="range">One row range to read in the sheet.</param>
 		protected virtual void ReadRow(ref DataTable dst, Range range)
 		{
-#if DEBUG
-            Log.TRACE();
-			Log.DEBUG($"{nameof(range.StartRow),20} = {range.StartRow}");
-			Log.DEBUG($"{nameof(range.StartColumn),20} = {range.StartColumn}");
-			Log.DEBUG($"{nameof(range.RowCount),20} = {range.RowCount}");
-			Log.DEBUG($"{nameof(range.ColumnCount),20} = {range.ColumnCount}");
-#endif
-
             DataRow row = dst.NewRow();
 			for (int colIndex = 0; colIndex < range.ColumnCount; colIndex++)
 			{
