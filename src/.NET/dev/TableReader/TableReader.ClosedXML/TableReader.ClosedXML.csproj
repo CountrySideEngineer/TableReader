@@ -7,12 +7,11 @@
     <BaseOutputPath>..\bin\$(AssemblyName)</BaseOutputPath>
     <AssemblyVersion>0.1.0.0</AssemblyVersion>
     <FileVersion>0.1.0.0</FileVersion>
-    <Version>0.1.0.0</Version>
     <RepositoryUrl>https://github.com/CountrySideEngineer/TableReader</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageReadmeFile></PackageReadmeFile>
     <ProductName>TableReader.ClosedXml</ProductName>
-    <Version>0.1.0.0</Version>
+    <Version>0.2.0.1</Version>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <AssemblyTitle>Read table from excel file using ClosedXml package.</AssemblyTitle>
   </PropertyGroup>
