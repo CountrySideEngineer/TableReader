@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using TableReader.Interface;
@@ -13,20 +14,20 @@ namespace TableReader.ExcelDataReader
 {
 	public class ExcelTableReader : ITableReader
 	{
-		/// <summary>
-		/// Excel stream object to stream.
-		/// </summary>
-		protected Stream _excelStream;
+        /// <summary>
+        /// Excel stream object to stream.
+        /// </summary>
+        protected Stream _excelStream = null;
 
 		/// <summary>
 		/// Data in sheet as DataTable object.
 		/// </summary>
-		protected DataTable _sheetData;
+		protected DataTable _sheetData = null;
 
-		/// <summary>
-		/// Sheet name to read from.
-		/// </summary>
-		public string SheetName { get; set; }
+        /// <summary>
+        /// Sheet name to read from.
+        /// </summary>
+        public string SheetName { get; set; } = string.Empty;
 
 		/// <summary>
 		/// Default constructor.
@@ -161,8 +162,7 @@ namespace TableReader.ExcelDataReader
 				{
 					item = _sheetData.Rows[tableTop.StartRow][tableTop.StartColumn + colCount];
 				}
-				catch (Exception ex)
-				when (ex is IndexOutOfRangeException)
+				catch (IndexOutOfRangeException)
 				{
 					//Reach the last column in the sheet.
 					break;
@@ -189,9 +189,9 @@ namespace TableReader.ExcelDataReader
 		{
 			if ((string.IsNullOrEmpty(item)) || (string.IsNullOrWhiteSpace(item)))
 			{
-				throw new ArgumentException("The string to be searched must have value.");
-			}
-			for (int rowIndex = 0; rowIndex < _sheetData.Rows.Count; rowIndex++)
+                throw new ArgumentException("The string to be searched must have value.");
+            }
+            for (int rowIndex = 0; rowIndex < _sheetData.Rows.Count; rowIndex++)
 			{
 				for (int colIndex = 0; colIndex < _sheetData.Columns.Count; colIndex++)
 				{
@@ -208,24 +208,24 @@ namespace TableReader.ExcelDataReader
 					}
 				}
 			}
-			throw new ArgumentException("No item has been foudn in found.");
-		}
+            throw new ArgumentException($"No cell containing \"{item}\" was found in sheet \"{SheetName}\".");
+        }
 
-		/// <summary>
-		/// Load work sheet from a stream as workbook.
-		/// </summary>
-		protected void LoadWorksheet()
+        /// <summary>
+        /// Load work sheet from a stream as workbook.
+        /// </summary>
+        protected void LoadWorksheet()
 		{
 			if (null == _excelStream)
 			{
-				throw new NullReferenceException("Stream data to read has not been set.");
-			}
-			if ((string.IsNullOrEmpty(SheetName)) || (string.IsNullOrWhiteSpace(SheetName)))
+                throw new NullReferenceException("The stream for reading the Excel file has not been set.");
+            }
+            if ((string.IsNullOrEmpty(SheetName)) || (string.IsNullOrWhiteSpace(SheetName)))
 			{
-				throw new InvalidDataException("Sheet Name to scan is invalid.");
-			}
+                throw new InvalidDataException("The stream used to read the Excel file has not been set.");
+            }
 
-			var readerConf = new ExcelReaderConfiguration()
+            var readerConf = new ExcelReaderConfiguration()
 			{
 				FallbackEncoding = Encoding.GetEncoding("Shift_JIS")
 			};
@@ -309,17 +309,14 @@ namespace TableReader.ExcelDataReader
 				{
 					object contentObj = _sheetData.Rows[range.StartRow][range.StartColumn + colIndex];
 					content = contentObj.ToString();
-				}
-				catch (Exception ex)
+                    row[colIndex] = content;
+                }
+                catch (Exception ex)
 				when ((ex is InvalidCastException) ||
 					(ex is IndexOutOfRangeException))
 				{
-					content = string.Empty;
-				}
-				finally
-				{
-					row[colIndex] = content;
-				}
+                    row[colIndex] = string.Empty;
+                }
 			}
 			dst.Rows.Add(row);
 		}

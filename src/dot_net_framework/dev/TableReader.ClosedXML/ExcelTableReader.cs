@@ -13,17 +13,17 @@ namespace TableReader.ClosedXML
 {
 	public class ExcelTableReader : ITableReader
 	{
-		/// <summary>
-		/// Excel stream data a table to read is set.
-		/// </summary>
-		protected Stream _excelStream;
+        /// <summary>
+        /// Excel stream data a table to read is set.
+        /// </summary>
+        protected Stream _excelStream = null;
 
-		protected IXLWorksheet _workSheet;
+        protected IXLWorksheet _workSheet = null;
 
-		/// <summary>
-		/// Sheet name to read.
-		/// </summary>
-		public string SheetName { get; set; }
+        /// <summary>
+        /// Sheet name to read.
+        /// </summary>
+        public string SheetName { get; set; } = string.Empty;
 
 		/// <summary>
 		/// Default constructor
@@ -99,7 +99,8 @@ namespace TableReader.ClosedXML
 			{
 				if ((range.StartRow < 1) || (range.RowCount < 0))
 				{
-					throw new ArgumentOutOfRangeException();
+                    string message = "Range to read are invalid.";
+                    throw new ArgumentOutOfRangeException(message);
 				}
 				var rangeCollection = new List<Range>();
 				for (int index = 0; index < range.RowCount; index++)
@@ -113,7 +114,8 @@ namespace TableReader.ClosedXML
 			}
 			catch (NullReferenceException)
 			{
-				throw new ArgumentNullException();
+                string message = "Argument Range must not be null.";
+                throw new ArgumentNullException(message);
 			}
 		}
 
@@ -130,9 +132,9 @@ namespace TableReader.ClosedXML
 			{
 				if ((range.StartColumn < 1) || (range.ColumnCount < 0))
 				{
-					throw new ArgumentOutOfRangeException();
-				}
-				var rangeCollection = new List<Range>();
+                    throw new ArgumentOutOfRangeException("Range to read are invalid.");
+                }
+                var rangeCollection = new List<Range>();
 				for (int index = 0; index < range.ColumnCount; index++)
 				{
 					var rowRange = new Range(range);
@@ -157,13 +159,13 @@ namespace TableReader.ClosedXML
 		{
 			if (null == _excelStream)
 			{
-				throw new NullReferenceException("Stream data to read has not been set.");
-			}
-			if ((string.IsNullOrEmpty(SheetName)) || (string.IsNullOrWhiteSpace(SheetName)))
+                throw new NullReferenceException("The stream for reading the Excel file has not been set.");
+            }
+            if ((string.IsNullOrEmpty(SheetName)) || (string.IsNullOrWhiteSpace(SheetName)))
 			{
-				throw new InvalidDataException("Sheet Name to scan is invalid.");
-			}
-			try
+                throw new InvalidDataException("The stream used to read the Excel file has not been set.");
+            }
+            try
 			{
 				if (null == _workSheet)
 				{
@@ -173,9 +175,9 @@ namespace TableReader.ClosedXML
 			}
 			catch (Exception)
 			{
-				throw new InvalidDataException("Sheet Name to scan is invalid.");
-			}
-		}
+                throw new InvalidDataException($"Sheet name {SheetName} is invalid.");
+            }
+        }
 
 		/// <summary>
 		/// Unload work sheet read from workbook.
@@ -199,12 +201,12 @@ namespace TableReader.ClosedXML
 		/// <exception cref="InvalidDataException">Sheet name to scan is invalid.</exception>
 		public Range FindFirstItem(string item)
 		{
-			if (string.IsNullOrEmpty(item))
-			{
-				throw new ArgumentException("The string to be searched must have value set.");
-			}
-			try
-			{
+            if ((string.IsNullOrEmpty(item)) || (string.IsNullOrWhiteSpace(item)))
+            {
+                throw new ArgumentException("The string to search must have a value.");
+            }
+            try
+            {
 				var usedCells = _workSheet.CellsUsed();
 				var itemCell = usedCells
 						.Where(_ => 0 == string.Compare(item, _.GetString()))
@@ -220,22 +222,20 @@ namespace TableReader.ClosedXML
 			}
 			catch (NullReferenceException)
 			{
-				string message = $"No cell contains \"{item}\" in {SheetName}.";
-				throw new ArgumentException(message);
+                throw new ArgumentException($"No cell containing \"{item}\" was found in sheet \"{SheetName}\".");
 			}
 			catch (ArgumentException ex)
 			{
-				if (string.IsNullOrEmpty(ex.Message))
-				{
-					string message = $"No cell contains \"{item}\" in {SheetName}.";
-					throw new ArgumentException(message);
-				}
-				else
-				{
-					throw;
-				}
-			}
-		}
+                if (string.IsNullOrEmpty(ex.Message))
+                {
+                    throw new ArgumentException($"No cell containing \"{item}\" was found in sheet \"{SheetName}\".");
+                }
+                else
+                {
+                    throw new ArgumentException("Argument invalid.");
+                }
+            }
+        }
 
 		/// <summary>
 		/// Get range of table.
