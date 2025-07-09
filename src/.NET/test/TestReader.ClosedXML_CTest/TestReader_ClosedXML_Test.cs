@@ -1,4 +1,3 @@
-using Logger;
 using System.Data;
 using TableReader.Interface;
 
@@ -12,7 +11,6 @@ namespace TestReader.ClosedXML_CTest
 		[OneTimeSetUp]
 		public void TestSetUp()
 		{
-			Log.AddLogger(new Logger.Console.DebugLog());
 		}
 
 		[SetUp]
