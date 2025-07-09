@@ -5,16 +5,36 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>annotations</Nullable>
     <BaseOutputPath>..\bin\$(AssemblyName)</BaseOutputPath>
-    <AssemblyVersion>0.1.0.0</AssemblyVersion>
-    <FileVersion>0.1.0.0</FileVersion>
+    <AssemblyVersion>0.2.0.1</AssemblyVersion>
+    <FileVersion>0.2.0.1</FileVersion>
     <RepositoryUrl>https://github.com/CountrySideEngineer/TableReader</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageReadmeFile></PackageReadmeFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <ProductName>TableReader.ClosedXml</ProductName>
     <Version>0.2.0.1</Version>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <AssemblyTitle>Read table from excel file using ClosedXml package.</AssemblyTitle>
+    <Authors>CountrySideEngineer</Authors>
+    <Copyright>Copyright @2025</Copyright>
+    <Description>TableReader.ClosedXML is a .NET library that provides a simple and efficient way to read tabular data from Excel files using the ClosedXML library.
+It enables developers to extract tables, rows, and columns from specified worksheets, supporting flexible range selection and robust error handling.
+This package is ideal for applications that require reliable Excel data import functionality without the need for Microsoft Office interop.
+Targeting .NET 8, TableReader.ClosedXML is suitable for modern .NET applications and services.</Description>
+    <PackageTags>TableReader;Exel;ClosedXML</PackageTags>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\..\..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.102.3" />
