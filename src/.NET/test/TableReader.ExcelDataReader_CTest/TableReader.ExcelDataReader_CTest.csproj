@@ -20,9 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Logger">
-      <HintPath>..\..\dev\TableReader\packages\Logger.dll</HintPath>
-    </Reference>
     <Reference Include="TableReader">
       <HintPath>..\..\dev\TableReader\bin\TableReader.ExcelDataReader\Release\net8.0\TableReader.dll</HintPath>
     </Reference>
