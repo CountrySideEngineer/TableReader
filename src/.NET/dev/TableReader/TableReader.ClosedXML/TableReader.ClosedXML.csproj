@@ -5,13 +5,13 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>annotations</Nullable>
     <BaseOutputPath>..\bin\$(AssemblyName)</BaseOutputPath>
-    <AssemblyVersion>0.2.0.1</AssemblyVersion>
-    <FileVersion>0.2.0.1</FileVersion>
+    <AssemblyVersion>0.2</AssemblyVersion>
+    <FileVersion>0.2.2</FileVersion>
     <RepositoryUrl>https://github.com/CountrySideEngineer/TableReader</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <ProductName>TableReader.ClosedXml</ProductName>
-    <Version>0.2.0.1</Version>
+    <Version>0.2.2</Version>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <AssemblyTitle>Read table from excel file using ClosedXml package.</AssemblyTitle>
     <Authors>CountrySideEngineer</Authors>
@@ -23,6 +23,7 @@ Targeting .NET 8, TableReader.ClosedXML is suitable for modern .NET applications
     <PackageTags>TableReader;Exel;ClosedXML</PackageTags>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>

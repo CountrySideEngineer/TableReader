@@ -7,19 +7,15 @@
     <RepositoryUrl>https://github.com/CountrySideEngineer/TableReader</RepositoryUrl>
     <PackageReadmeFile></PackageReadmeFile>
     <BaseOutputPath>..\bin</BaseOutputPath>
-    <AssemblyVersion>0.1.0.0</AssemblyVersion>
-    <FileVersion>0.1.0</FileVersion>
-    <Version>0.1.0.0</Version>
+    <FileVersion>1.0.1</FileVersion>
+    <Version>1.0.1</Version>
     <ProductName>TableReader</ProductName>
     <RepositoryType>Git</RepositoryType>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <Product>TableReader</Product>
     <AssemblyTitle>TableReader library.</AssemblyTitle>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageId>TableReader</PackageId>
+    <AssemblyVersion>1.0</AssemblyVersion>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Reference Include="Logger">
-      <HintPath>..\packages\Logger.dll</HintPath>
-    </Reference>
-  </ItemGroup>
 </Project>

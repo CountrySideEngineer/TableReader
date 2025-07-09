@@ -5,13 +5,13 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>annotations</Nullable>
     <BaseOutputPath>..\bin\$(AssemblyName)</BaseOutputPath>
-    <AssemblyVersion>0.2.0.1</AssemblyVersion>
-    <FileVersion>0.2.0.1</FileVersion>
+    <AssemblyVersion>0.2</AssemblyVersion>
+    <FileVersion>0.2.4</FileVersion>
     <RepositoryUrl>https://github.com/CountrySideEngineer/TableReader</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <ProductName>TableReader.ExcelDataReader</ProductName>
-    <Version>0.2.0.1</Version>
+    <Version>0.2.4</Version>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <AssemblyTitle>Read table from excel file using ExcelDataReader package.</AssemblyTitle>
     <Authors>CountrySideEngineer</Authors>
@@ -23,6 +23,7 @@ TableReader.ExcelDataReader is well-suited for modern .NET applications and serv
     <PackageTags>TableReader;Exel;ExcelDataReader</PackageTags>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
